@@ -19,8 +19,9 @@ namespace FisrtLab
 
         public void Print()
         {
-            Console.WriteLine($"Name: {Name}\nRate:");
+            Console.Write($"Name: {Name} |||  Rate:");
             rate.Print();
+            Console.WriteLine();
         }
     }
 }

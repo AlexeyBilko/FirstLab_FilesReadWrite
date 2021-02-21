@@ -17,42 +17,32 @@ namespace FisrtLab
 
         static void ReadFromFile(string path)
         {
+            string text = File.ReadAllText(path);
+            string[] lines = text.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
+
             List<Country> list = new List<Country>();
-            int tmp = 1;
 
-            using (FileStream fs = new FileStream(path, FileMode.Open))
-            using (StreamReader cr = new StreamReader(fs))
+            for (int i = 0; i < lines.Length; i++)
             {
-                while (!cr.EndOfStream)
+                if (i != 0)
                 {
-                    if (tmp == 1)
+                    string CountryName = lines[i].Substring(0, lines[i].IndexOf(","));
+
+                    string buf = lines[i].Substring(lines[i].IndexOf(",") + 1);
+                    string[] listTmp = buf.Split(',');
+
+
+                    int[] listTmp1 = new int[10];
+                    for (int j = 0; j < 10; j++)
                     {
-
+                        listTmp1[j] = Convert.ToInt32(listTmp[j]);
                     }
-                    else
-                    {
-                        string str1 = cr.ReadLine();
 
-                        string CountryName = str1.Substring(0, str1.IndexOf(","));
+                    Rate ratetmp = new Rate(listTmp1.ToList());
 
-                        string buf = str1.Substring(str1.IndexOf(",") + 1);
-                        string[] listTmp = buf.Split(',');
+                    Country country = new Country(CountryName, ratetmp);
 
-                        int[] listTmp1 = new int[10];
-                        for (int i = 0; i < 10; i++)
-                        {
-                            listTmp1[i] = Convert.ToInt32(listTmp[i]);
-                        }
-
-                        Rate rate = new Rate(listTmp1.ToList());
-
-                        Country country = new Country(CountryName, rate);
-
-                        list.Add(country);
-
-
-                    }
-                    tmp++;
+                    list.Add(country);
                 }
             }
 
