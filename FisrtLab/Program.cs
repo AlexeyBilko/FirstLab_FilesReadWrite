@@ -10,14 +10,26 @@ namespace FisrtLab
 {
     class Program
     {
+        static int iterator = 1;
+
         static void Main(string[] args)
         {
-            string path = @"C:\Users\38098\source\repos\FisrtLab\FisrtLab\obj\Debug\Introduction-To-Programming\labs_spring_2020\examples_2\var1\eurovision1.csv";
-            ReadFromFile(path);
+            Console.WriteLine("Enter directory path:");
+
+            string path = Console.ReadLine();
+
+            var links = Directory.GetFiles(path);
+
+            foreach (var item in links)
+            {
+                ReadFromFile(item);
+            }
         }
 
         static void ReadFromFile(string path)
         {
+            int count = 0;
+
             string text = File.ReadAllText(path);
             string[] lines = text.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -25,7 +37,11 @@ namespace FisrtLab
 
             for (int i = 0; i < lines.Length; i++)
             {
-                if (i != 0)
+                if (i == 0)
+                {
+                    count = Convert.ToInt32(lines[i]);
+                }
+                else
                 {
                     string CountryName = lines[i].Substring(0, lines[i].IndexOf(","));
 
@@ -33,8 +49,8 @@ namespace FisrtLab
                     string[] listTmp = buf.Split(',');
 
 
-                    int[] listTmp1 = new int[10];
-                    for (int j = 0; j < 10; j++)
+                    int[] listTmp1 = new int[listTmp.Length];
+                    for (int j = 0; j < count; j++)
                     {
                         listTmp1[j] = Convert.ToInt32(listTmp[j]);
                     }
@@ -47,17 +63,12 @@ namespace FisrtLab
                 }
             }
 
-            foreach (var item in list)
-            {
-                item.Print();
-            }
-
-            ListWithRatingfrom12to1(list);
+            ListWithRatingfrom12to1(list, count);
         }
 
-        static void ListWithRatingfrom12to1(List<Country> list)
+        static void ListWithRatingfrom12to1(List<Country> list, int count)
         {
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < 20; i++)
             {
                 list = list.OrderBy(x => x.rate.list[i]).ToList();
 
@@ -73,10 +84,55 @@ namespace FisrtLab
                 list[0].rate.list[i] = 1;
             }
 
-            Console.WriteLine();
+            Winners(list);
+        }
+
+        static void Winners(List<Country> list)
+        {
+            Dictionary<string, int> d = new Dictionary<string, int>();
             foreach (var item in list)
             {
-                item.Print();
+                int sum = 0;
+                foreach (var item1 in item.rate.list)
+                {
+                    sum += item1;
+                }
+
+                d.Add(item.Name, sum);
+            }
+
+
+            d = d.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
+            d.Reverse();
+
+
+            Console.WriteLine();
+            foreach (var item in d)
+            {
+                Console.WriteLine(item.Key + " " + item.Value);
+            }
+
+            SaveInFile(d);
+        }
+
+        static void SaveInFile(Dictionary<string, int> d)
+        {
+            List<string> final = new List<string>();
+            int i = 10;
+
+            foreach (var item in d)
+            {
+                final.Add(item.Key + " with total rating: " + item.Value + " | PLACE " + i);
+                i--;
+            }
+
+            string path = $"results" + iterator++ + ".csv";
+
+            File.WriteAllText(path, "");
+
+            foreach (var item in final)
+            {
+                File.AppendAllText(path, item + Environment.NewLine);
             }
 
             Winners(list);
