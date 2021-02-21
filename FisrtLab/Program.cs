@@ -134,54 +134,6 @@ namespace FisrtLab
             {
                 File.AppendAllText(path, item + Environment.NewLine);
             }
-
-            Winners(list);
-        }
-
-        static void Winners(List<Country> list)
-        {
-            Dictionary<string, int> d = new Dictionary<string, int>();
-            foreach (var item in list)
-            {
-                int sum = 0;
-                foreach (var item1 in item.rate.list)
-                {
-                    sum += item1;
-                }
-
-                d.Add(item.Name, sum);
-            }
-
-
-            d = d.OrderBy(x => x.Value).ToDictionary(x => x.Key, x => x.Value);
-            d.Reverse();
-
-
-            Console.WriteLine();
-            foreach (var item in d)
-            {
-                Console.WriteLine(item.Key + " " + item.Value);
-            }
-
-            SaveInFile(d);
-        }
-
-        static void SaveInFile(Dictionary<string, int> d)
-        {
-            List<string> final = new List<string>();
-            int i = 10;
-            foreach (var item in d)
-            {
-                final.Add(item.Key + " with total rating: " + item.Value + " | PLACE " + i);
-                i--;
-            }
-
-            File.WriteAllText("OutPut.txt", "");
-
-            foreach (var item in final)
-            {
-                File.AppendAllText("OutPut.txt", item + Environment.NewLine);
-            }
         }
     }
 }
