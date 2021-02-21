@@ -15,18 +15,21 @@ namespace FisrtLab
         static void Main(string[] args)
         {
             Console.WriteLine("Enter directory path:");
+
             string path = Console.ReadLine();
+
             var links = Directory.GetFiles(path);
+
             foreach (var item in links)
             {
-                string tmp = item;
-                ReadFromFile(tmp);
+                ReadFromFile(item);
             }
         }
 
         static void ReadFromFile(string path)
         {
             int count = 0;
+
             string text = File.ReadAllText(path);
             string[] lines = text.Split(new char[] { '\n' }, StringSplitOptions.RemoveEmptyEntries);
 
@@ -46,7 +49,7 @@ namespace FisrtLab
                     string[] listTmp = buf.Split(',');
 
 
-                    int[] listTmp1 = new int[count];
+                    int[] listTmp1 = new int[listTmp.Length];
                     for (int j = 0; j < count; j++)
                     {
                         listTmp1[j] = Convert.ToInt32(listTmp[j]);
@@ -65,7 +68,7 @@ namespace FisrtLab
 
         static void ListWithRatingfrom12to1(List<Country> list, int count)
         {
-            for (int i = 0; i < count; i++)
+            for (int i = 0; i < 20; i++)
             {
                 list = list.OrderBy(x => x.rate.list[i]).ToList();
 
