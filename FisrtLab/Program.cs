@@ -11,6 +11,7 @@ namespace FisrtLab
     class Program
     {
         static int iterator = 1;
+
         static void Main(string[] args)
         {
             Console.WriteLine("Enter directory path:");
@@ -36,7 +37,6 @@ namespace FisrtLab
                 if (i == 0)
                 {
                     count = Convert.ToInt32(lines[i]);
-
                 }
                 else
                 {
