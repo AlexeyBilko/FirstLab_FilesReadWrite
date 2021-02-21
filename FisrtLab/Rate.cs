@@ -8,7 +8,7 @@ namespace FisrtLab
 {
     class Rate
     {
-        List<int> list;
+        public List<int> list;
 
         public Rate(List<int> list)
         {

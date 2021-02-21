@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace FisrtLab
 {
     class Program
@@ -46,6 +47,33 @@ namespace FisrtLab
                 }
             }
 
+            foreach (var item in list)
+            {
+                item.Print();
+            }
+
+            ListWithRatingfrom12to1(list);
+        }
+
+        static void ListWithRatingfrom12to1(List<Country> list)
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                list = list.OrderBy(x => x.rate.list[i]).ToList();
+
+                list[9].rate.list[i] = 12;
+                list[8].rate.list[i] = 10;
+                list[7].rate.list[i] = 8;
+                list[6].rate.list[i] = 7;
+                list[5].rate.list[i] = 6;
+                list[4].rate.list[i] = 5;
+                list[3].rate.list[i] = 4;
+                list[2].rate.list[i] = 3;
+                list[1].rate.list[i] = 2;
+                list[0].rate.list[i] = 1;
+            }
+
+            Console.WriteLine();
             foreach (var item in list)
             {
                 item.Print();
